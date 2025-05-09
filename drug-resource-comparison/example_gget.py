@@ -10,7 +10,7 @@ import gget
 gene_symbol = "KCNK3"
 gene_id = "ENSG00000171303"
 
-results_path = Path(f"../results/{gene_symbol}_gget.json")
+results_path = Path(f"../results/{gene_symbol}-gget.json")
 if not results_path.exists():
 
     print(f"Getting gget data for {gene_symbol}")

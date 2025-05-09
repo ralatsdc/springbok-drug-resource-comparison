@@ -12,7 +12,7 @@ from chembl_webresource_client.new_client import new_client
 gene_symbol = "KCNK3"
 gene_id = "ENSG00000171303"
 
-results_path = Path(f"../results/{gene_symbol}_chembl.json")
+results_path = Path(f"../results/{gene_symbol}-chembl.json")
 if not results_path.exists():
 
     results = {}
@@ -431,13 +431,14 @@ if not results_path.exists():
         json.dump(results, fp, indent=4)
 
 # == image
-chemblid = "CHEMBL25"
-image_path = Path(f"../results/{chemblid}.svg")
+drug_id = "CHEMBL714"
+drug_name = "ALBUTEROL"
+image_path = Path(f"../results/{drug_name}-chembl.svg")
 if not image_path.exists():
 
-    print(f"Getting ChEMBL SVG for {chemblid}")
+    print(f"Getting ChEMBL SVG for {drug_name}")
 
     image = new_client.image
     image.set_format("svg")
     with open(image_path, "w") as fp:
-        fp.write(image.get(chemblid))
+        fp.write(image.get(drug_id))

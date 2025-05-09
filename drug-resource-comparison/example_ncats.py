@@ -1,7 +1,7 @@
 #!/usr/bin/env python
-"""Provides an example use of the NCATS API to obtain GSRS and Sticher
-data given a compound id. Also copies the data downloaded from
-Figshare, and base64 decodes the conditions field."""
+"""Provides an example use of the NCATS API to obtain GSRS and
+Stitcher data given a compound id. Also copies the data downloaded
+from Figshare, and base64 decodes the conditions field."""
 import base64
 import json
 from pathlib import Path
