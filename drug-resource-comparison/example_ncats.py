@@ -1,7 +1,6 @@
 #!/usr/bin/env python
-"""Provides an example use of the NCATS API to obtain GSRS and
-Stitcher data given a compound id. Also copies the data downloaded
-from Figshare, and base64 decodes the conditions field."""
+
+import argparse
 import base64
 import json
 from pathlib import Path
@@ -9,45 +8,71 @@ import shutil
 
 import requests
 
-compound_id = 1408
-compound_name = "OLMESARTAN"
-compound_unii = "8W1IQP3U10"
 
-gsrs_path = Path(f"../results/{compound_name}-ncats-gsrs.json")
-if not gsrs_path.exists():
+def main():
+    """Provides an example use of the NCATS API to obtain GSRS and
+    Stitcher data given a compound id. Also copies the data downloaded
+    from Figshare, and base64 decodes the conditions field.
+    """
+    parser = argparse.ArgumentParser(
+        description="Demonstrate use of the ChEMBL Python client library"
+    )
+    parser.add_argument(
+        "-f", "--force",
+        action="store_true",
+        help="force update of existing files",
+    )
+    args = parser.parse_args()
 
-    print(f"Getting NCATS GSRS data for {compound_name}")
+    # compound_id = 1408
+    # compound_name = "OLMESARTAN"
+    # compound_unii = "8W1IQP3U10"
 
-    gsrs_url = f"https://drugs.ncats.io/api/v1/substances({compound_unii})?view=full"
-    gsrs_response = requests.get(gsrs_url)
-    with open(gsrs_path, "w") as fp:
-        json.dump(json.loads(gsrs_response.text), fp, indent=4)
+    compound_id = 1060
+    compound_name = "ALBUTEROL"
+    compound_unii = "QF8SVZ843E"
 
-stitcher_path = Path(f"../results/{compound_name}-ncats-stitcher.json")
-if not stitcher_path.exists():
+    gsrs_path = Path(f"../results/{compound_name}-ncats-gsrs.json")
+    if not gsrs_path.exists() or args.force:
 
-    print(f"Getting NCATS Stitcher data for {compound_name}")
+        print(f"Getting NCATS GSRS data for {compound_name}")
 
-    stitcher_url = f"https://drugs.ncats.io/api/v1/substances({compound_unii})/@additional?view=full"
-    stitcher_response = requests.get(stitcher_url)
-    with open(stitcher_path, "w") as fp:
-        json.dump(json.loads(stitcher_response.text), fp, indent=4)
+        gsrs_url = (
+            f"https://drugs.ncats.io/api/v1/substances({compound_unii})?view=full"
+        )
+        gsrs_response = requests.get(gsrs_url)
+        with open(gsrs_path, "w") as fp:
+            json.dump(json.loads(gsrs_response.text), fp, indent=4)
 
-figshare_path = Path(f"../data/stitcher_json_files/{compound_unii}.json")
-shutil.copy(figshare_path, Path(f"../results/{compound_name}-ncats-figshare.json"))
-with open(figshare_path, "r") as fp:
+    stitcher_path = Path(f"../results/{compound_name}-ncats-stitcher.json")
+    if not stitcher_path.exists() or args.force:
 
-    print(f"Copying NCATS Figshare data for {compound_name}")
+        print(f"Getting NCATS Stitcher data for {compound_name}")
 
-    stitcher_json = json.load(fp)
+        stitcher_url = f"https://drugs.ncats.io/api/v1/substances({compound_unii})/@additional?view=full"
+        stitcher_response = requests.get(stitcher_url)
+        with open(stitcher_path, "w") as fp:
+            json.dump(json.loads(stitcher_response.text), fp, indent=4)
 
-conditions_path = Path(f"../results/{compound_name}-ncats-conditions.json")
-if not conditions_path.exists():
+    figshare_path = Path(f"../data/stitcher_json_files/{compound_unii}.json")
+    shutil.copy(figshare_path, Path(f"../results/{compound_name}-ncats-figshare.json"))
+    with open(figshare_path, "r") as fp:
 
-    print(f"Decoding NCATS Figshare conditions field for {compound_name}")
+        print(f"Copying NCATS Figshare data for {compound_name}")
 
-    encoded_string = stitcher_json["sgroup"]["properties"]["conditions"][0]["value"]
-    decoded_bytes = base64.b64decode(encoded_string)
-    decoded_string = decoded_bytes.decode('utf-8')
-    with open(conditions_path, "w") as fp:
-        json.dump(json.loads(decoded_string), fp, indent=4)
+        stitcher_json = json.load(fp)
+
+    conditions_path = Path(f"../results/{compound_name}-ncats-conditions.json")
+    if not conditions_path.exists() or args.force:
+
+        print(f"Decoding NCATS Figshare conditions field for {compound_name}")
+
+        encoded_string = stitcher_json["sgroup"]["properties"]["conditions"][0]["value"]
+        decoded_bytes = base64.b64decode(encoded_string)
+        decoded_string = decoded_bytes.decode("utf-8")
+        with open(conditions_path, "w") as fp:
+            json.dump(json.loads(decoded_string), fp, indent=4)
+
+
+if __name__ == "__main__":
+    main()
