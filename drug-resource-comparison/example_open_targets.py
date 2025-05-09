@@ -10,7 +10,9 @@ gene_id = "ENSG00000171303"
 
 results_path = Path(f"../results/{gene_symbol}_open_targets.json")
 if not results_path.exists():
+
     print(f"Getting Open Targets data for {gene_symbol}")
+
     # See: https://api.platform.opentargets.org/api/v4/graphql/browser
     query_string = """
     query target($ensemblId: String!) {
