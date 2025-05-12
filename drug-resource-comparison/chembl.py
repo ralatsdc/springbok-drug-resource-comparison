@@ -6,6 +6,8 @@ from pathlib import Path
 
 from chembl_webresource_client.new_client import new_client
 
+from LoaderUtilities import get_gene_name_to_ids_map, map_gene_name_to_ids
+
 
 def main():
     """Provides an example use of the ChEMBL Python client library to
@@ -17,17 +19,25 @@ def main():
         description="Demonstrate use of the ChEMBL Python client library"
     )
     parser.add_argument(
-        "-f", "--force",
+        "--gene-symbol",
+        default="ADRB2",
+        help="gene symbol for which to obtain ChEMBL data (default: ADRB2)",
+    )
+    parser.add_argument(
+        "-f",
+        "--force",
         action="store_true",
         help="force update of existing files",
     )
     args = parser.parse_args()
 
-    # gene_symbol = "KCNK3"
-    # gene_id = "ENSG00000171303"
+    gene_symbol = args.gene_symbol
+    if gene_symbol == "ADRB2":
+        gene_id = "ENSG00000169252"
 
-    gene_symbol = "ADRB2"
-    gene_id = "ENSG00000169252"
+    else:
+        gnm2ids = get_gene_name_to_ids_map()
+        gene_id = map_gene_name_to_ids(gene_symbol, gnm2ids)
 
     results_path = Path(f"../results/{gene_symbol}-chembl.json")
     if not results_path.exists() or args.force:

@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 import shutil
 
+import pandas as pd
 import requests
 
 
@@ -18,19 +19,36 @@ def main():
         description="Demonstrate use of the ChEMBL Python client library"
     )
     parser.add_argument(
-        "-f", "--force",
+        "--compound-name",
+        default="ALBUTEROL",
+        help="compoundname for which to obtain NCATS Inxight data (default: ALBUTEROL)",
+    )
+    parser.add_argument(
+        "-f",
+        "--force",
         action="store_true",
         help="force update of existing files",
     )
     args = parser.parse_args()
 
-    # compound_id = 1408
     # compound_name = "OLMESARTAN"
     # compound_unii = "8W1IQP3U10"
 
-    compound_id = 1060
-    compound_name = "ALBUTEROL"
-    compound_unii = "QF8SVZ843E"
+    compound_name = args.compound_name
+    if compound_name == "ALBUTEROL":
+        compound_unii = "QF8SVZ843E"
+
+    else:
+        drugs = pd.read_csv("../data/frdb/frdb-drugs.tsv")
+        selected_drugs = drugs[drugs["compound_name"].str.contains(f"^{compound_name}")]
+        if selected_drugs.shape[0] == 0:
+            print(f"Found {selected_drugs.shape[0]} matching compounds")
+            return
+        elif selected_drugs.shape[0] > 1:
+            print(
+                f"Found {selected_drugs.shape[0]} matching compounds, using first:{selected_drugs.iloc[0]}"
+            )
+        compound_unii = selected_drugs.iloc[0, 2]
 
     gsrs_path = Path(f"../results/{compound_name}-ncats-gsrs.json")
     if not gsrs_path.exists() or args.force:

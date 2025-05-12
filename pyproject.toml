@@ -11,6 +11,7 @@ python = "^3.10"
 gget = "^0.29.1"
 chembl-webresource-client = "^0.10.9"
 requests = "^2.32.3"
+scanpy = ">=1.10"
 
 [tool.poetry.group.dev.dependencies]
 black = "^24.4.2"

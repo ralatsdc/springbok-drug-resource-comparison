@@ -6,6 +6,8 @@ from pathlib import Path
 
 import requests
 
+from LoaderUtilities import get_gene_id_to_names_map, map_gene_id_to_names
+
 
 def main():
     """Provides an example use of the Open Targets GraphQL API to
@@ -15,17 +17,25 @@ def main():
         description="Demonstrate use of the ChEMBL Python client library"
     )
     parser.add_argument(
-        "-f", "--force",
+        "--gene-id",
+        default="ENSG00000169252",
+        help="gene id for which to obtain gget data (default: ENSG00000169252)",
+    )
+    parser.add_argument(
+        "-f",
+        "--force",
         action="store_true",
         help="force update of existing files",
     )
     args = parser.parse_args()
 
-    # gene_symbol = "KCNK3"
-    # gene_id = "ENSG00000171303"
+    gene_id = args.gene_id
+    if gene_id == "ENSG00000169252":
+        gene_symbol = "ADRB2"
 
-    gene_symbol = "ADRB2"
-    gene_id = "ENSG00000169252"
+    else:
+        gid2nms = get_gene_id_to_names_map()
+        gene_symbol = map_gene_id_to_names(gene_id, gid2nms)
 
     # == target
 

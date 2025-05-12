@@ -1,0 +1,1 @@
+../cell-kn-etl-results/src/main/python/UniProtIdMapper.py
