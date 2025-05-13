@@ -3,6 +3,7 @@
 import argparse
 import json
 from pathlib import Path
+import time
 
 from chembl_webresource_client.new_client import new_client
 
@@ -48,6 +49,7 @@ def main():
 
         # == target
 
+        start_time = time.time()
         print(f"Getting ChEMBL target data for {gene_symbol}")
 
         only = ["organism", "target_chembl_id"]
@@ -81,18 +83,27 @@ def main():
         with open(results_path, "w") as fp:
             json.dump(results, fp, indent=4)
 
+        stop_time = time.time()
+        print(
+            f"Got ChEMBL target data for {gene_symbol} in {stop_time - start_time} seconds"
+        )
+
     # == image
     drug_id = "CHEMBL714"
     drug_name = "ALBUTEROL"
     image_path = Path(f"../results/{drug_name}-chembl.svg")
     if not image_path.exists() or args.force:
 
+        start_time = time.time()
         print(f"Getting ChEMBL SVG for {drug_name}")
 
         image = new_client.image
         image.set_format("svg")
         with open(image_path, "w") as fp:
             fp.write(image.get(drug_id))
+
+        stop_time = time.time()
+        print(f"Got ChEMBL SVG for {drug_name} in {stop_time - start_time} seconds")
 
 
 if __name__ == "__main__":
