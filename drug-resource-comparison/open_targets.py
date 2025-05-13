@@ -7,7 +7,7 @@ import time
 
 import requests
 
-from LoaderUtilities import get_gene_id_to_names_map, map_gene_id_to_names
+from LoaderUtilities import get_gene_name_to_ids_map, map_gene_name_to_ids
 
 
 def main():
@@ -15,12 +15,12 @@ def main():
     obtain proteins, drugs, and diseases given a gene id.
     """
     parser = argparse.ArgumentParser(
-        description="Demonstrate use of the ChEMBL Python client library"
+        description="Demonstrate use of the Open Targets GraphQL API"
     )
     parser.add_argument(
-        "--gene-id",
-        default="ENSG00000169252",
-        help="gene id for which to obtain gget data (default: ENSG00000169252)",
+        "--gene-symbol",
+        default="ADRB2",
+        help="gene symbol for which to obtain Open Targets data (default: ADRB2)",
     )
     parser.add_argument(
         "-f",
