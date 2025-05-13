@@ -12,9 +12,9 @@ from LoaderUtilities import get_gene_name_to_ids_map, map_gene_name_to_ids
 
 def main():
     """Provides an example use of the ChEMBL Python client library to
-    obtain targets, activities, and molecules for given a gene symbol
-    from ChEMBL. Also use the client library to obtain the molecule
-    image for a given ChEMBL id.
+    obtain targets, activities, drug, drug indication, and molecules
+    for given a gene symbol from ChEMBL. Also use the client library
+    to obtain the molecule image for a given ChEMBL id.
     """
     parser = argparse.ArgumentParser(
         description="Demonstrate use of the ChEMBL Python client library"
@@ -32,7 +32,7 @@ def main():
     )
     args = parser.parse_args()
 
-    gene_symbol = args.gene_symbol
+    gene_symbol = args.gene_symbol.upper()
     if gene_symbol == "ADRB2":
         gene_id = "ENSG00000169252"
 
@@ -69,12 +69,33 @@ def main():
         )  # .filter(standard_type="IC50")
         results["activity"] = list(activity_results)
 
+        molecule_chembl_ids = [a_r["molecule_chembl_id"] for a_r in activity_results]
+
+        # == drug
+
+        print(f"Getting ChEMBL drug data for {gene_symbol}")
+
+        drug = new_client.drug
+        drug_results = drug.filter(
+            molecule_chembl_id__in=molecule_chembl_ids, max_phase=4
+        )
+        results["drug"] = list(drug_results)
+
+        # == drug_indication
+
+        print(f"Getting ChEMBL drug indication data for {gene_symbol}")
+
+        drug_indication = new_client.drug_indication
+        drug_indication_results = drug_indication.filter(
+            molecule_chembl_id__in=molecule_chembl_ids, max_phase_for_ind=4
+        )
+        results["drug_indication"] = list(drug_indication_results)
+
         # == molecule
 
         print(f"Getting ChEMBL molecule data for {gene_symbol}")
 
         molecule = new_client.molecule
-        molecule_chembl_ids = [a_r["molecule_chembl_id"] for a_r in activity_results]
         molecule_results = molecule.filter(
             molecule_chembl_id__in=molecule_chembl_ids, max_phase=4
         )
