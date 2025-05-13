@@ -17,7 +17,7 @@ def main():
     from Figshare, and base64 decodes the conditions field.
     """
     parser = argparse.ArgumentParser(
-        description="Demonstrate use of the ChEMBL Python client library"
+        description="Demonstrate use of the NCATS Inxight API"
     )
     parser.add_argument(
         "--compound-name",
@@ -32,10 +32,7 @@ def main():
     )
     args = parser.parse_args()
 
-    # compound_name = "OLMESARTAN"
-    # compound_unii = "8W1IQP3U10"
-
-    compound_name = args.compound_name
+    compound_name = args.compound_name.upper()
     if compound_name == "ALBUTEROL":
         compound_unii = "QF8SVZ843E"
 
