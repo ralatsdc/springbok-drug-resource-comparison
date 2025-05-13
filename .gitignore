@@ -2,8 +2,6 @@
 *.log
 *.nav
 *.out
-*.png
-*.pptx
 *.snm
 *.toc
 .DS_Store
