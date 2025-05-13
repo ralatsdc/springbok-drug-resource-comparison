@@ -7,7 +7,7 @@ import time
 
 import gget
 
-from LoaderUtilities import get_gene_id_to_names_map, map_gene_id_to_names
+from LoaderUtilities import get_gene_name_to_ids_map, map_gene_name_to_ids
 
 
 def main():
@@ -18,9 +18,9 @@ def main():
         description="Demonstrate use of the gget opentargets command"
     )
     parser.add_argument(
-        "--gene-id",
-        default="ENSG00000169252",
-        help="gene id for which to obtain gget data (default: ENSG00000169252)",
+        "--gene-symbol",
+        default="ADRB2",
+        help="gene symbol for which to obtain gget data (default: ADRB2)",
     )
     parser.add_argument(
         "-f",
@@ -30,13 +30,13 @@ def main():
     )
     args = parser.parse_args()
 
-    gene_id = args.gene_id
-    if gene_id == "ENSG00000169252":
-        gene_symbol = "ADRB2"
+    gene_symbol = args.gene_symbol.upper()
+    if gene_symbol == "ADRB2":
+        gene_id = "ENSG00000169252"
 
     else:
-        gid2nms = get_gene_id_to_names_map()
-        gene_symbol = map_gene_id_to_names(gene_id, gid2nms)
+        gnm2ids = get_gene_name_to_ids_map()
+        gene_id = map_gene_name_to_ids(gene_symbol, gnm2ids)[0]
 
     results_path = Path(f"../results/{gene_symbol}-gget.json")
     if not results_path.exists() or args.force:
@@ -48,12 +48,19 @@ def main():
         results["target"] = {}
         results["target"]["id"] = gene_id
         results["target"]["symbol"] = gene_symbol
+
+        # == diseases
+
         results["target"]["diseases"] = gget.opentargets(
             gene_id, resource="diseases", json=True
         )
+
+        # == drugs
+
         results["target"]["drugs"] = gget.opentargets(
             gene_id, resource="drugs", json=True
         )
+
         with open(results_path, "w") as fp:
             json.dump(results, fp, indent=4)
 
