@@ -1,0 +1,291 @@
+\documentclass[aspectratio=169,xcolor=dvipsnames]{beamer}
+
+\mode<presentation>
+{
+  \usetheme{default}
+
+  \usecolortheme{default}
+  \usefonttheme{default}
+  \useinnertheme{circles}
+
+  \setbeamertemplate{navigation symbols}{}
+  \setbeamertemplate{caption}[numbered]
+
+  \setbeamertemplate{title page}[default][center]
+  \setbeamercolor{title}{fg=black}
+  \setbeamercolor{subtitle}{fg=black}
+  \setbeamercolor{author}{fg=black}
+  \setbeamercolor{date}{fg=black}
+
+  \setbeamertemplate{frametitle}[default][leftskip=1.0cm]
+  \setbeamercolor{frametitle}{fg=black}
+  
+  \setbeamertemplate{footline}[text line]{\color{white}\raisebox{9.75pt}{\hspace{-25pt}\insertframenumber/\inserttotalframenumber}}
+}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[english]{babel}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[mathscr]{euscript}
+\usepackage{pifont}
+\usepackage[utf8x]{inputenc}
+\usepackage[normalem]{ulem}
+
+\newcommand{\cmark}{\ding{51}}
+\newcommand{\xmark}{\ding{55}}
+
+\hypersetup{colorlinks=true,citecolor=black,linkcolor=black,urlcolor=blue}
+
+\title[]{Drug Resource Comparison}
+\subtitle[]{ChEMBL, NCATS Inxight Drugs, Open Targets}
+\author{Raymond LeClair}
+\date{Working Copy of May 13, 2025}
+
+\begin{document}
+
+{
+  \usebackgroundtemplate{\includegraphics[width=\paperwidth]{NLM-2024-Title-Background.png}}
+  \setbeamertemplate{footline}{}
+  \begin{frame}
+    \vspace{6\baselineskip}
+    \titlepage
+  \end{frame}
+}
+
+\setcounter{framenumber}{0}
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth,height=\paperheight]{NLM-2024-Slide-Background.png}}
+
+% \begin{frame}{Outline}
+%   \tableofcontents[sectionstyle=show,subsectionstyle=hide]
+% \end{frame}
+
+% \begin{frame}{Outline}
+%   \tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/shaded/hide]
+% \end{frame}
+
+\begin{frame}
+  \frametitle{Purpose and Approach}
+  \framesubtitle{}
+  \begin{itemize}
+  \item[] Purpose
+    \begin{itemize}
+    \item Evaluate how comprehensive and authoritative results from
+      each resource appear
+    \item Demonstrate use of drug resource APIs using Python
+    \end{itemize}
+  \item[]
+  \item[] Approach
+    \begin{itemize}
+    \item Follow gene target to approved drugs and disease indications
+    \item Investigate gene target ADRB2, approved drug Albuterol, and
+      disease Asthma
+    \item Focus on comparing indications, evidence, and resource
+      activity
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Drug Resources: Descriptions and Management (1 of 2)}
+  \framesubtitle{}
+  \begin{itemize}
+  \item[] \href{https://www.ebi.ac.uk/chembl/}{ChEMBL}
+    \begin{itemize}
+    \item ``A manually curated database of bioactive molecules with
+      drug-like properties''
+    \item Managed by European Molecular Biology Laboratory-European
+      Bioinformatics Institute (EMBL-EBI)
+      \href{https://www.ebi.ac.uk/about/teams/chemical-biology-services/}{Chemical
+        Biology Services}
+    \item Twenty-four team members supporting four services
+    \end{itemize}
+  \item[]
+  \item[] \href{https://drugs.ncats.io/}{NCATS Inxight Drugs}
+    \begin{itemize}
+    \item ``A comprehensive portal for drug development information''
+    \item Managed by \href{https://drugs.ncats.io/about}{NCATS/NIH,
+      Division of Preclinical Innovation, IFX Core}
+    \item Two team members supporting one service
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Drug Resources: Descriptions and Management (2 of 2)}
+  \framesubtitle{}
+  \begin{itemize}
+  \item[]
+    \href{https://platform-docs.opentargets.org/getting-started}{Open
+      Targets Platform}
+    \begin{itemize}
+    \item ``A comprehensive tool that supports systematic
+      identification and prioritisation of potential therapeutic drug
+      targets''
+    \item Managed by a consortium of
+      \href{https://www.opentargets.org/partners}{partner
+        institutions} including EMBL-EBI, Genentech, GSK, MSD, Pfizer,
+      Sanofi, Wellcome Sanger Institute
+    \item Forty-seven team members supporting one service
+    \end{itemize}
+  \item[]
+  \item[]
+  \item[]
+  \item[]
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Drug Resources: APIs and Example Use (1 of 2)}
+  \framesubtitle{See
+    \href{https://github.com/ralatsdc/springbok-drug-resource-comparison}{springbok-drug-resource-comparison}
+    repository}
+  \begin{itemize}
+  \item[] \href{https://www.ebi.ac.uk/chembl/}{ChEMBL}
+    \begin{itemize}
+    \item API: Data Web Services
+      \href{https://chembl.gitbook.io/chembl-interface-documentation/web-services/chembl-data-web-services}{documentation},
+      Python client
+      \href{https://github.com/chembl/chembl_webresource_client}{repository}
+      (not actively developed), and webresource client
+      \href{http://beta.mybinder.org/v2/gh/chembl/chembl_webresource_client/master?filepath=demo_wrc.ipynb}{examples}
+    \item Usage: {\texttt chembl.py [-h] [--gene-symbol GENE\_SYMBOL]
+      [-f]}
+    \item Performance: Got ChEMBL target data for ADRB2 in 383 s on
+      the first request, and under 3 s on the second request,
+      suggesting the responses are cached
+    \end{itemize}
+  \item[]
+  \item[] \href{https://drugs.ncats.io/}{NCATS Inxight Drugs}
+    \begin{itemize}
+    \item API: \href{https://drugs.ncats.io/api}{Inxight} (no
+      repository located), and
+      \href{https://github.com/ncats/stitcher}{Stitcher} (repository
+      archived)
+    \item Usage: {\texttt ncats.py [-h] [--compound-name COMPOUND\_NAME] [-f]}
+    \item Performance: Got NCATS GSRS data for ALBUTEROL in 8 s, and
+      Stitcher data for ALBUTEROL in 3 s, although performance varied
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Drug Resources: APIs and Example Use (2 of 2)}
+  \framesubtitle{See
+    \href{https://github.com/ralatsdc/springbok-drug-resource-comparison}{springbok-drug-resource-comparison}
+    repository}
+  \begin{itemize}
+  \item[]
+    \href{https://platform-docs.opentargets.org/getting-started}{Open
+      Targets Platform}
+    \begin{itemize}
+    \item API: \href{https://github.com/pachterlab/gget}{gget}
+      (repository actively developed), and Open Targets
+      \href{https://platform.opentargets.org/api}{API Description},
+      \href{https://platform-docs.opentargets.org/data-access/graphql-api}{GraphQL
+        API},
+      \href{https://api.platform.opentargets.org/api/v4/graphql/browser}{GraphQL
+        API playground}, and
+      \href{https://github.com/opentargets/platform-api}{repository}
+      (actively developed)
+    \item Usage: {\texttt gget\_cli.py $|$ open\_targets.py [-h] [--gene-symbol GENE\_SYMBOL]}
+    \item Performance: Got gget data for ADRB2 in 2 s, got Open
+      Targets data for ADRB2, and ALBUTEROL in less than 1 s
+    \end{itemize}
+  \item[]
+  \item[]
+  \item[]
+  \item[]
+  \item[]
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{But wait ... Why no Albuterol? ... And what's with those EFO terms?}
+  \framesubtitle{}
+  \begin{itemize}
+  \item[] Why no Albuterol?
+    \begin{itemize}
+    \item Open Targets identifies ADRB2 as the only target for
+      Albuterol, while NCATS Inxight also identifies ADRB1
+    \item ADRB2 and ADRB1 do not appear in the NSForest binary or
+      marker gene results
+    \item Since we search for drugs associated with genes, the search
+      does not find Albuterol
+    \end{itemize}
+  \item[]
+  \item[] And the EFO terms?
+    \begin{itemize}
+    \item The \href{https://www.ebi.ac.uk/efo/}{Experimental Factor
+      Ontology} (EFO) describes many experimental variables in EBI
+      databases
+    \item The EFO serves as the core ontology for Open Targets
+    \item Cross references are provided to many other ontologies,
+      including MONDO
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Drug Resources: Results Comparison and Evaluation}
+  \frametitle{}
+  \framesubtitle{}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Observations and Recommendations}
+  \frametitle{}
+  \framesubtitle{}
+\end{frame}
+
+%% f
+%% \begin{frame}
+%%   \frametitle{}
+%%   \framesubtitle{}
+%% \end{frame}
+
+%% i
+%% \begin{itemize}
+%% \item[]
+%% \end{itemize}
+
+%% e
+%% \begin{enumerate}
+%% \item
+%% \item
+%% \end{enumerate}
+
+%% c
+%% \begin{columns}
+%%   \begin{column}{0.5\textwidth}
+%%   \end{column}
+%%   \begin{column}{0.5\textwidth}
+%%   \end{column}
+%% \end{columns}
+
+%% g
+%% \begin{frame}
+%%   \frametitle{}
+%%   \framesubtitle{}
+%%   \begin{figure}
+%%     \begin{center}
+%%       \includegraphics[height=0.8\textheight]{}
+%%     \end{center}
+%%   \end{figure}
+%% \end{frame}
+
+%% b
+%% \begin{frame}
+%%   \frametitle{}
+%%   \framesubtitle{}
+%%   \begin{table}
+%%     \begin{center}
+%%       \input{}
+%%     \end{center}
+%%   \end{table}
+%% \end{frame}
+
+\end{document}
