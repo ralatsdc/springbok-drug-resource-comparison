@@ -3,6 +3,7 @@
 import argparse
 import json
 from pathlib import Path
+import time
 
 import requests
 
@@ -29,19 +30,20 @@ def main():
     )
     args = parser.parse_args()
 
-    gene_id = args.gene_id
-    if gene_id == "ENSG00000169252":
-        gene_symbol = "ADRB2"
+    gene_symbol = args.gene_symbol.upper()
+    if gene_symbol == "ADRB2":
+        gene_id = "ENSG00000169252"
 
     else:
-        gid2nms = get_gene_id_to_names_map()
-        gene_symbol = map_gene_id_to_names(gene_id, gid2nms)
+        gnm2ids = get_gene_name_to_ids_map()
+        gene_id = map_gene_name_to_ids(gene_symbol, gnm2ids)
 
     # == target
 
     results_path = Path(f"../results/{gene_symbol}-open-targets-target.json")
-    if not results_path.exists():
+    if not results_path.exists() or args.force:
 
+        start_time = time.time()
         print(f"Getting Open Targets target data for {gene_symbol}")
 
         # See: https://api.platform.opentargets.org/api/v4/graphql/browser
@@ -134,14 +136,25 @@ def main():
         with open(results_path, "w") as fp:
             json.dump(results, fp, indent=4)
 
+        stop_time = time.time()
+        print(
+            f"Got Open Targets target data for {gene_symbol} in {stop_time - start_time} seconds"
+        )
+
+    # == disease
+
+    # TODO: Use first associated disease to complete?
+
     # == drug
 
+    # TODO: Use first known drug?
     drug_id = "CHEMBL714"
     drug_name = "ALBUTEROL"
 
     results_path = Path(f"../results/{drug_name}-open-targets-drug.json")
-    if not results_path.exists():
+    if not results_path.exists() or args.force:
 
+        start_time = time.time()
         print(f"Getting Open Targets drug data for {drug_name}")
 
         # See: https://api.platform.opentargets.org/api/v4/graphql/browser
@@ -298,6 +311,11 @@ def main():
         results = json.loads(response.text)["data"]
         with open(results_path, "w") as fp:
             json.dump(results, fp, indent=4)
+
+        stop_time = time.time()
+        print(
+            f"Got Open Targets drug data for {drug_name} in {stop_time - start_time} seconds"
+        )
 
 
 if __name__ == "__main__":
