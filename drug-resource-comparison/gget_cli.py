@@ -3,6 +3,7 @@
 import argparse
 import json
 from pathlib import Path
+import time
 
 import gget
 
@@ -40,6 +41,7 @@ def main():
     results_path = Path(f"../results/{gene_symbol}-gget.json")
     if not results_path.exists() or args.force:
 
+        start_time = time.time()
         print(f"Getting gget data for {gene_symbol}")
 
         results = {}
@@ -54,6 +56,9 @@ def main():
         )
         with open(results_path, "w") as fp:
             json.dump(results, fp, indent=4)
+
+        stop_time = time.time()
+        print(f"Got gget data for {gene_symbol} in {stop_time - start_time} seconds")
 
 
 if __name__ == "__main__":
