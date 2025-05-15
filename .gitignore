@@ -2,8 +2,10 @@
 *.log
 *.nav
 *.out
+*.pdf
 *.snm
 *.toc
+*.vrb
 .DS_Store
 .notes
 .pybiomart.sqlite

@@ -30,9 +30,9 @@
 \usepackage{listings}
 \usepackage{mathrsfs}
 \usepackage[mathscr]{euscript}
+\usepackage[normalem]{ulem}
 \usepackage{pifont}
 \usepackage[utf8x]{inputenc}
-\usepackage[normalem]{ulem}
 
 \newcommand{\cmark}{\ding{51}}
 \newcommand{\xmark}{\ding{55}}
@@ -73,8 +73,8 @@
   \begin{itemize}
   \item[] Purpose
     \begin{itemize}
-    \item Evaluate how comprehensive and authoritative results from
-      each resource appear
+    \item Compare how comprehensive, authoritative, and organized
+      results from each resource appear
     \item Demonstrate use of drug resource APIs using Python
     \end{itemize}
   \item[]
@@ -90,7 +90,7 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{Drug Resources: Descriptions and Management (1 of 2)}
+  \frametitle{Descriptions and Management (1 of 2)}
   \framesubtitle{}
   \begin{itemize}
   \item[] \href{https://www.ebi.ac.uk/chembl/}{ChEMBL}
@@ -115,7 +115,7 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{Drug Resources: Descriptions and Management (2 of 2)}
+  \frametitle{Descriptions and Management (2 of 2)}
   \framesubtitle{}
   \begin{itemize}
   \item[]
@@ -139,73 +139,8 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{Drug Resources: APIs and Example Use (1 of 2)}
-  \framesubtitle{See
-    \href{https://github.com/ralatsdc/springbok-drug-resource-comparison}{springbok-drug-resource-comparison}
-    repository}
-  \begin{itemize}
-  \item[] \href{https://www.ebi.ac.uk/chembl/}{ChEMBL}
-    \begin{itemize}
-    \item API: Data Web Services
-      \href{https://chembl.gitbook.io/chembl-interface-documentation/web-services/chembl-data-web-services}{documentation},
-      Python client
-      \href{https://github.com/chembl/chembl_webresource_client}{repository}
-      (not actively developed), and webresource client
-      \href{http://beta.mybinder.org/v2/gh/chembl/chembl_webresource_client/master?filepath=demo_wrc.ipynb}{examples}
-    \item Usage: {\texttt chembl.py [-h] [--gene-symbol GENE\_SYMBOL]
-      [-f]}
-    \item Performance: Got ChEMBL target data for ADRB2 in 383 s on
-      the first request, and under 3 s on the second request,
-      suggesting the responses are cached
-    \end{itemize}
-  \item[]
-  \item[] \href{https://drugs.ncats.io/}{NCATS Inxight Drugs}
-    \begin{itemize}
-    \item API: \href{https://drugs.ncats.io/api}{Inxight} (no
-      repository located), and
-      \href{https://github.com/ncats/stitcher}{Stitcher} (repository
-      archived)
-    \item Usage: {\texttt ncats.py [-h] [--compound-name COMPOUND\_NAME] [-f]}
-    \item Performance: Got NCATS GSRS data for ALBUTEROL in 8 s, and
-      Stitcher data for ALBUTEROL in 3 s, although performance varied
-    \end{itemize}
-  \end{itemize}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Drug Resources: APIs and Example Use (2 of 2)}
-  \framesubtitle{See
-    \href{https://github.com/ralatsdc/springbok-drug-resource-comparison}{springbok-drug-resource-comparison}
-    repository}
-  \begin{itemize}
-  \item[]
-    \href{https://platform-docs.opentargets.org/getting-started}{Open
-      Targets Platform}
-    \begin{itemize}
-    \item API: \href{https://github.com/pachterlab/gget}{gget}
-      (repository actively developed), and Open Targets
-      \href{https://platform.opentargets.org/api}{API Description},
-      \href{https://platform-docs.opentargets.org/data-access/graphql-api}{GraphQL
-        API},
-      \href{https://api.platform.opentargets.org/api/v4/graphql/browser}{GraphQL
-        API playground}, and
-      \href{https://github.com/opentargets/platform-api}{repository}
-      (actively developed)
-    \item Usage: {\texttt gget\_cli.py $|$ open\_targets.py [-h] [--gene-symbol GENE\_SYMBOL]}
-    \item Performance: Got gget data for ADRB2 in 2 s, got Open
-      Targets data for ADRB2, and ALBUTEROL in less than 1 s
-    \end{itemize}
-  \item[]
-  \item[]
-  \item[]
-  \item[]
-  \item[]
-  \end{itemize}
-\end{frame}
-
-\begin{frame}
-  \frametitle{But wait ... Why no Albuterol? ... And what's with those EFO terms?}
-  \framesubtitle{}
+  \frametitle{Why consider Open Targets?}
+  \framesubtitle{Or, why no Albuterol? And what's with those EFO terms?}
   \begin{itemize}
   \item[] Why no Albuterol?
     \begin{itemize}
@@ -213,8 +148,8 @@
       Albuterol, while NCATS Inxight also identifies ADRB1
     \item ADRB2 and ADRB1 do not appear in the NSForest binary or
       marker gene results
-    \item Since we search for drugs associated with genes, the search
-      does not find Albuterol
+    \item Since we search for drugs associated with these genes, the
+      search does not find Albuterol
     \end{itemize}
   \item[]
   \item[] And the EFO terms?
@@ -230,15 +165,1263 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{Drug Resources: Results Comparison and Evaluation}
-  \frametitle{}
+  \frametitle{\href{https://www.ebi.ac.uk/chembl/}{ChEMBL} API and
+    Example Use}
+  \framesubtitle{See
+    \href{https://github.com/ralatsdc/springbok-drug-resource-comparison}{springbok-drug-resource-comparison}
+    repository}
+  \begin{itemize}
+  \item[] \textbf{API}: Data Web Services
+    \href{https://chembl.gitbook.io/chembl-interface-documentation/web-services/chembl-data-web-services}{documentation},
+    Python client
+    \href{https://github.com/chembl/chembl_webresource_client}{repository}
+    (not actively developed), and webresource client
+    \href{http://beta.mybinder.org/v2/gh/chembl/chembl_webresource_client/master?filepath=demo_wrc.ipynb}{examples}
+  \item[] \textbf{Usage}: {\texttt chembl.py [-h] [--gene-symbol GENE\_SYMBOL]
+    [-f]}
+    \begin{itemize}
+    \item Get ChEMBL target id for a gene symbol
+    \item Get ChEMBL molecule ids for a target id
+    \item Get drugs and drug indications for all molecule ids
+    \item Get SVG image for a drug
+    \end{itemize}
+  \item[] \textbf{Performance}: Got ChEMBL target data for ADRB2 in 383 s on
+    the first request, and under 3 s on the second request, suggesting
+    the responses are cached
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,t]
+  \frametitle{ChEMBL Activity Data for ADRB2}
   \framesubtitle{}
+  \tiny
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+    \vspace{-2\baselineskip}
+\begin{verbatim}
+"activity": [
+  {
+    "action_type": null,
+    "activity_comment": null,
+    "activity_id": 52694,
+    "activity_properties": [],
+    "assay_chembl_id": "CHEMBL652493",
+    "assay_description": "Binding affinity against adrenergic
+        receptor subtype Beta-2 adrenergic receptor using
+        [3H]DHA as radioligand",
+    "assay_type": "B",
+    "assay_variant_accession": null,
+    "assay_variant_mutation": null,
+    "bao_endpoint": "BAO_0000192",
+    "bao_format": "BAO_0000357",
+    "bao_label": "single protein format",
+    "canonical_smiles": "COc1cccc2c1CC[C@H]1CN(CCn3c(=O)[nH]c4c
+        (sc5cccnc54)c3=O)C[C@@H]21",
+    "data_validity_comment": null,
+    "data_validity_description": null,
+    "document_chembl_id": "CHEMBL1130166",
+    "document_journal": "J Med Chem",
+    "document_year": 1997,
+    "ligand_efficiency": {
+        "bei": "12.07",
+        "le": "0.23",
+        "lle": "2.44",
+        "sei": "6.75"
+    },
+\end{verbatim}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+    \vspace{-2\baselineskip}
+\begin{verbatim}
+    "molecule_chembl_id": "CHEMBL40650",
+    "molecule_pref_name": null,
+    "parent_molecule_chembl_id": "CHEMBL40650",
+    "pchembl_value": "5.41",
+    "potential_duplicate": 0,
+    "qudt_units": "http://www.openphacts.org/units/Nanomolar",
+    "record_id": 199469,
+    "relation": "=",
+    "src_id": 1,
+    "standard_flag": 1,
+    "standard_relation": "=",
+    "standard_text_value": null,
+    "standard_type": "Ki",
+    "standard_units": "nM",
+    "standard_upper_value": null,
+    "standard_value": "3870.0",
+    "target_chembl_id": "CHEMBL210",
+    "target_organism": "Homo sapiens",
+    "target_pref_name": "Beta-2 adrenergic receptor",
+    "target_tax_id": "9606",
+    "text_value": null,
+    "toid": null,
+    "type": "Ki",
+    "units": "nM",
+    "uo_units": "UO_0000065",
+    "upper_value": null,
+    "value": "3870.0"
+  }
+]    
+\end{verbatim}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile,t]
+  \frametitle{ChEMBL Drug Data for Albuterol (1 of 2)}
+  \framesubtitle{}
+  \tiny
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+\begin{verbatim}
+{
+    "applicants": [
+        "Dash Pharmaceuticals Llc A Fully Owned Sub Of
+            Natco Pharma Ltd",
+    ],
+    "atc_classification": [
+        {
+            "code": "R03AC02",
+            "description": "RESPIRATORY SYSTEM: DRUGS FOR
+                OBSTRUCTIVE AIRWAY DISEASES: ADRENERGICS,
+                INHALANTS: Selective beta-2-adrenoreceptor
+                agonist"
+        },
+    ],
+    "availability_type": 1,
+    "biotherapeutic": null,
+    "black_box": 1,
+    "black_box_warning": "1",
+    "chirality": 0,
+    "drug_type": 1,
+    "first_approval": 1981,
+    "first_in_class": 0,
+    "helm_notation": null,
+\end{verbatim}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+\begin{verbatim}
+    "indication_class": "Bronchodilator",
+    "max_phase": "4.0",
+    "molecule_chembl_id": "CHEMBL714",
+    "ob_patent": "7105152",
+    "oral": 1,
+    "parenteral": 0,
+    "prodrug": 0,
+    "research_codes": [
+        "SCH-13949W",
+    ],
+    "rule_of_five": 1,
+    "sc_patent": "US-7105152-B1",
+    "synonyms": [
+        "Albuterol sulfate (MI, USAN, USP)",
+    ],
+    "topical": 1,
+    "usan_stem": "-terol",
+    "usan_stem_definition": "bronchodilators
+        (phenethylamine derivatives)",
+    "usan_stem_substem": "-terol(-terol)",
+    "usan_year": 1971,
+    "withdrawn_flag": "0"
+\end{verbatim}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile,t]
+  \frametitle{ChEMBL Drug Data for Albuterol (2 of 2)}
+  \framesubtitle{}
+  \tiny
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+\begin{verbatim}
+    "molecule_properties": {
+        "alogp": "1.31",
+        "aromatic_rings": 1,
+        "cx_logd": "-1.32",
+        "cx_logp": "0.34",
+        "cx_most_apka": "10.12",
+        "cx_most_bpka": "9.40",
+        "full_molformula": "C13H21NO3",
+        "full_mwt": "239.31",
+        "hba": 4,
+        "hba_lipinski": 4,
+        "hbd": 4,
+        "hbd_lipinski": 4,
+        "heavy_atoms": 17,
+        "molecular_species": "BASE",
+        "mw_freebase": "239.31",
+        "mw_monoisotopic": "239.1521",
+        "np_likeness_score": "0.56",
+        "num_lipinski_ro5_violations": 0,
+        "num_ro5_violations": 0,
+        "psa": "72.72",
+        "qed_weighted": "0.64",
+        "ro3_pass": "N",
+        "rtb": 4
+    },
+\end{verbatim}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+\begin{verbatim}
+    "molecule_structures": {
+        "canonical_smiles": "CC(C)(C)NCC(O)c1ccc(O)c(CO)c1",
+        "molfile": "...",
+        "standard_inchi": "InChI=1S/C13H21NO3/c1-13(2,3)14-7-
+            12(17)9-4-5-11(16)10(6-9)8-15/h4-6,12,14-17H,7-
+            8H2,1-3H3",
+        "standard_inchi_key": "NDAUXUAQIAJITI-UHFFFAOYSA-N"
+    },
+    "molecule_synonyms": [
+        {
+            "molecule_synonym": "Accuneb",
+            "syn_type": "OTHER",
+            "synonyms": "Accuneb"
+        },
+    ],
+}
+\end{verbatim}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile,t]
+  \frametitle{ChEMBL Drug Indication Data for Albuterol}
+  \framesubtitle{}
+  \tiny
+\begin{verbatim}
+{
+    "drugind_id": 22644,
+    "efo_id": "EFO:0000341",
+    "efo_term": "chronic obstructive pulmonary disease",
+    "indication_refs": [
+        {
+            "ref_id": "NCT00354354,NCT00358488,NCT00359788,...",
+            "ref_type": "ClinicalTrials",
+            "ref_url": "https://clinicaltrials.gov/search?term=NCT00354354%20NCT00358488%20NCT00359788%20..."
+        },
+    ]
+    "max_phase_for_ind": "4.0",
+    "mesh_heading": "Pulmonary Disease, Chronic Obstructive",
+    "mesh_id": "D029424",
+    "molecule_chembl_id": "CHEMBL714",
+    "parent_molecule_chembl_id": "CHEMBL714"
+}
+\end{verbatim}
 \end{frame}
 
 \begin{frame}
+  \frametitle{ChEMBL Image for Albuterol}
+  \framesubtitle{}
+  \begin{figure}
+    \begin{center}
+      \includegraphics[height=0.8\textheight]{../results/ALBUTEROL-chembl.pdf}
+    \end{center}
+  \end{figure}
+\end{frame}
+
+\begin{frame}
+  \frametitle{\href{https://drugs.ncats.io/}{NCATS Inxight Drugs} API
+    and Example Use}
+  \framesubtitle{See
+    \href{https://github.com/ralatsdc/springbok-drug-resource-comparison}{springbok-drug-resource-comparison}
+    repository}
+  \begin{itemize}
+  \item[] \textbf{API}: \href{https://drugs.ncats.io/api}{Inxight} (no repository
+    located), and \href{https://github.com/ncats/stitcher}{Stitcher}
+    (repository archived)
+  \item[] \textbf{Usage}: {\texttt ncats.py [-h] [--compound-name COMPOUND\_NAME]
+    [-f]}
+    \begin{itemize}
+    \item Get GSRS data for a compound unique ingredient identifier
+    \item Get Stitcher data for a compound unique ingredient identifier
+    \item Read Figshare data for a compound unique ingredient identifier
+    \item Decode Figshare conditions field
+    \end{itemize}
+  \item[] \textbf{Performance}: Got NCATS GSRS data for ALBUTEROL in 8 s, and
+    Stitcher data for ALBUTEROL in 3 s, although performance varied
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,t]
+  \frametitle{NCATS Inxight Drugs GSRS Data for Albuterol}
+  \framesubtitle{}
+  \tiny
+\begin{verbatim}
+{
+    "uuid": "7e0fae4c-00c6-4453-a6dc-a60ce10141ae",
+    "created": 1743445978000,
+    "createdBy": "admin",
+    "lastEdited": 1743565750000,
+    "lastEditedBy": "admin",
+    "deprecated": false,
+    "definitionType": "PRIMARY",
+    "definitionLevel": "COMPLETE",
+    "substanceClass": "chemical",
+    "status": "approved",
+    "version": "161",
+    "approvedBy": "FDA_SRS",
+    "names": [...],
+    "codes": [...]
+    "modifications": {...}
+    "notes": [...]
+    "properties": [...]
+    "approvalID": "QF8SVZ843E",
+    "tags": [],
+    "structure": {...}
+    "moieties": [...]
+    "_approvalIDDisplay": "QF8SVZ843E",
+    "_name": "ALBUTEROL",
+    "access": [],
+    "_self": "https://drugs.ncats.io/api/v1/substances(7e0fae4c-00c6-4453-a6dc-a60ce10141ae)?view=full"
+}
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile,t]
+  \frametitle{NCATS Inxight Drugs GSRS Data for Albuterol: Names}
+  \framesubtitle{}
+  \tiny
+\begin{verbatim}
+    "names": [
+        {
+            "uuid": "16e067cd-7fdd-462c-85a6-ac12f53ab4d8",
+            "created": 1743445978000,
+            "createdBy": "admin",
+            "lastEdited": 1743445978000,
+            "lastEditedBy": "admin",
+            "deprecated": false,
+            "name": "1,3-BENZENEDIMETHANOL, .ALPHA.(SUP 1)-(((1,1-DIMETHYLETHYL)AMINO)METHYL)-4-HYDROXY-",
+            "type": "cn",
+            "domains": [],
+            "languages": [
+                "en"
+            ],
+            "nameJurisdiction": [],
+            "nameOrgs": [],
+            "preferred": false,
+            "displayName": false,
+            "references": [
+                "b6709ca2-68bc-46bd-bd2f-cb333651db46"
+            ],
+            "access": [],
+            "_self": "https://drugs.ncats.io/api/v1/names(16e067cd-7fdd-462c-85a6-ac12f53ab4d8)?view=full"
+        },
+    ]
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile,t]
+  \frametitle{NCATS Inxight Drugs GSRS Data for Albuterol: Codes}
+  \framesubtitle{}
+  \tiny
+\begin{verbatim}
+    "codes": [
+        {
+            "uuid": "1cd3bf3f-6ecd-4a84-8ec7-8a923c037fc8",
+            "created": 1743445978000,
+            "createdBy": "admin",
+            "lastEdited": 1743445978000,
+            "lastEditedBy": "admin",
+            "deprecated": false,
+            "codeSystem": "WHO INTERNATIONAL PHARMACOPEIA",
+            "code": "ALBUTEROL",
+            "comments": "Description: A white or almost white, crystalline powder; odourless. ...",
+            "type": "PRIMARY",
+            "url": "http://apps.who.int/phint/pdf/b/Jb.6.1.370.pdf",
+            "references": [
+                "1545c398-17c3-4d51-a00e-dbcf43cc056a"
+            ],
+            "access": [],
+            "_self": "https://drugs.ncats.io/api/v1/codes(1cd3bf3f-6ecd-4a84-8ec7-8a923c037fc8)?view=full"
+        },
+    ]
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile,t]
+  \frametitle{NCATS Inxight Drugs GSRS Data for Albuterol: Modifications}
+  \framesubtitle{}
+  \tiny
+\begin{verbatim}
+    "modifications": {
+        "uuid": "d4293ed4-cba3-41cc-8c90-afe244780365",
+        "created": 1743445978000,
+        "createdBy": "admin",
+        "lastEdited": 1743445978000,
+        "lastEditedBy": "admin",
+        "deprecated": false,
+        "agentModifications": [],
+        "physicalModifications": [],
+        "structuralModifications": [],
+        "references": [],
+        "access": []
+    },
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile,t]
+  \frametitle{NCATS Inxight Drugs GSRS Data for Albuterol: Notes}
+  \framesubtitle{}
+  \tiny
+\begin{verbatim}
+    "notes": [
+        {
+            "uuid": "0b661db6-7f4c-431e-88c5-72d89cb8144d",
+            "created": 1743445978000,
+            "createdBy": "admin",
+            "lastEdited": 1743445978000,
+            "lastEditedBy": "admin",
+            "deprecated": false,
+            "note": "[Validation]WARNING:Code 'QR03AK04'[WHO-VATC] collides (possible duplicate)
+                with existing code & codeSystem for substance:\n[Q2WXR1I0PK]CROMOLYN SODIUM",
+            "references": [
+                "cc331491-ef4a-48c3-9e93-30c9d33aac9a"
+            ],
+            "access": [
+                "admin"
+            ]
+        },
+    ]
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile,t]
+  \frametitle{NCATS Inxight Drugs GSRS Data for Albuterol: Properties}
+  \framesubtitle{}
+  \tiny
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+\begin{verbatim}
+    "properties": [
+        {
+            "uuid": "3996b30a-6ff4-47c6-9b94-4dc364d75960",
+            "created": 1743445978000,
+            "createdBy": "admin",
+            "lastEdited": 1743445978000,
+            "lastEditedBy": "admin",
+            "deprecated": false,
+            "name": "Volume of Distribution",
+            "propertyType": "PHARMACOKINETIC",
+            "value": {
+                "uuid": "cb7ae50b-e777-4eb3-a349-809e4610b997",
+                "created": 1743445978000,
+                "createdBy": "admin",
+                "lastEdited": 1743445978000,
+                "lastEditedBy": "admin",
+                "deprecated": false,
+                "average": 3.4,
+                "units": "Liters/Kilogram",
+                "references": [],
+                "access": []
+            },
+\end{verbatim}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+\begin{verbatim}
+            "defining": false,
+            "parameters": [],
+            "references": [
+                "b6340555-7138-c54c-c98f-2f086ba11246"
+            ],
+            "access": []
+        },
+    ]
+\end{verbatim}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile,t]
+  \frametitle{NCATS Inxight Drugs GSRS Data for Albuterol: Structure}
+  \framesubtitle{}
+  \tiny
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+\begin{verbatim}
+    "structure": {
+        "id": "5a129248-bc18-4545-99a1-5d175834c363",
+        "created": 1743445978000,
+        "lastEdited": 1743445978000,
+        "deprecated": false,
+        "digest": "0dc449888fa8e42de5c7e5f7b60941364bfadb55",
+        "molfile": "...",
+        "smiles": "CC(C)(C)NCC(O)C1=CC(CO)=C(O)C=C1",
+        "formula": "C13H21NO3",
+        "opticalActivity": "( + / - )",
+        "atropisomerism": "No",
+        "stereoCenters": 1,
+        "definedStereo": 0,
+        "ezCenters": 0,
+        "charge": 0,
+        "mwt": 239.3107,
+        "count": 1,
+        "createdBy": "admin",
+        "lastEditedBy": "admin",
+        "hash": "RJYZJCG7HWL2",
+\end{verbatim}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+\begin{verbatim}
+        "self": "https://drugs.ncats.io/api/v1/structures
+            (5a129248-bc18-4545-99a1-5d175834c363)?view=full",
+        "stereochemistry": "RACEMIC",
+        "references": [
+            "42aba274-8264-4ecf-a4a0-59adad9b98c6",
+            "0b8676bd-1f66-4f1f-9737-97a3e13a2d31",
+            "82199cff-aff9-4ca9-9948-baf170553652"
+        ],
+        "access": []
+    },
+\end{verbatim}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile,t]
+  \frametitle{NCATS Inxight Drugs GSRS Data for Albuterol: Moieties}
+  \framesubtitle{}
+  \tiny
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+\begin{verbatim}
+    "moieties": [
+        {
+            "uuid": "75edf16e-1c0b-4ba3-aa75-5985d23c30b0",
+            "created": 1743445979000,
+            "createdBy": "admin",
+            "lastEdited": 1743445979000,
+            "lastEditedBy": "admin",
+            "deprecated": false,
+            "id": "75edf16e-1c0b-4ba3-aa75-5985d23c30b0",
+            "digest": "036ea932aac80052cab2f56f97d446eb52ebbf6d",
+            "molfile": "...",
+            "smiles": "CC(C)(C)NCC(O)C1=CC(CO)=C(O)C=C1",
+            "formula": "C13H21NO3",
+            "opticalActivity": "( + / - )",
+            "atropisomerism": "No",
+            "stereoCenters": 1,
+            "definedStereo": 0,
+            "ezCenters": 0,
+            "charge": 0,
+            "mwt": 239.3107,
+            "count": 1,
+            "hash": "RJYZJCG7HWL2",
+\end{verbatim}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+\begin{verbatim}
+            "self": "https://drugs.ncats.io/api/v1/structures
+                (75edf16e-1c0b-4ba3-aa75-5985d23c30b0)?view=full",
+            "stereochemistry": "RACEMIC",
+            "references": [],
+            "access": [],
+            "countAmount": {
+                "uuid": "1b01d0ee-8b2d-4b14-9b7e-2e4fd65f8ae9",
+                "created": 1743445979000,
+                "createdBy": "admin",
+                "lastEdited": 1743445979000,
+                "lastEditedBy": "admin",
+                "deprecated": false,
+                "type": "MOL RATIO",
+                "average": 1.0,
+                "units": "MOL RATIO",
+                "references": [],
+                "access": []
+            }
+        }
+    ]
+}
+\end{verbatim}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile,t]
+  \frametitle{NCATS Inxight Drugs Stitcher Data for Albuterol: PubMed (1 of 2)}
+  \framesubtitle{}
+  \tiny
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+\begin{verbatim}
+{
+    "name": "PubMed",
+    "value": {
+        "uid": "14657817",
+        "pubdate": "2003 Dec",
+        "epubdate": "",
+        "source": "J Pediatr",
+        "authors": [
+            {
+                "name": "Carl JC",
+                "authtype": "Author",
+                "clusterid": ""
+            },
+        ],
+        "lastauthor": "Kercsmar CM",
+        "title": "Comparison of racemic albuterol and
+            levalbuterol for treatment of acute asthma.",
+        "sorttitle": "comparison of racemic albuterol and
+            levalbuterol for treatment of acute asthma",
+        "volume": "143",
+        "issue": "6",
+        "pages": "731-6",
+        "lang": [
+            "eng"
+        ],
+\end{verbatim}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+\begin{verbatim}
+        "nlmuniqueid": "0375410",
+        "issn": "0022-3476",
+        "essn": "",
+        "pubtype": [
+            "Clinical Trial",
+            "Journal Article",
+            "Randomized Controlled Trial"
+        ],
+        "recordstatus": "PubMed - indexed for MEDLINE",
+        "pubstatus": "4",
+        "articleids": [
+            {
+                "idtype": "pubmed",
+                "idtypen": 1,
+                "value": "14657817"
+            },
+        ],
+        "history": [
+            {
+                "pubstatus": "pubmed",
+                "date": "2003/12/06 05:00"
+            },
+        ],
+\end{verbatim}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile,t]
+  \frametitle{NCATS Inxight Drugs Stitcher Data for Albuterol: PubMed (2 of 2)}
+  \framesubtitle{}
+  \tiny
+  \begin{columns}[t]
+    \begin{column}{0.6\textwidth}
+\begin{verbatim}
+        "references": [
+            {
+                "refsource": "J Pediatr. 2003 Dec;143(6):702-4.
+                    doi: 10.1016/j.jpeds.2003.10.018.",
+                "reftype": "Comment in",
+                "pmid": 14657810,
+                "note": ""
+            },
+        ],
+        "attributes": [
+            "Has Abstract"
+        ],
+        "pmcrefcount": "",
+        "fulljournalname": "The Journal of pediatrics",
+\end{verbatim}
+    \end{column}
+    \begin{column}{0.4\textwidth}
+\begin{verbatim}
+        "elocationid": "",
+        "doctype": "citation",
+        "srccontriblist": [],
+        "booktitle": "",
+        "medium": "",
+        "edition": "",
+        "publisherlocation": "",
+        "publishername": "",
+        "srcdate": "",
+        "reportnumber": "",
+        "availablefromurl": "",
+        "locationlabel": "",
+        "doccontriblist": [],
+        "docdate": "",
+        "bookname": "",
+        "chapter": "",
+        "sortpubdate": "2003/12/01 00:00",
+        "sortfirstauthor": "Carl JC",
+        "vernaculartitle": ""
+    }
+},
+\end{verbatim}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile,t]
+  \frametitle{NCATS Inxight Drugs Stitcher Data for Albuterol: Description and Phase}
+  \framesubtitle{}
+  \tiny
+\begin{verbatim}
+    {
+        "value": {
+            "description": "Levalbuterol is the (R)-enantiomer of the drug substance racemic albuterol
+                 (salbutamol). Binding studies have demonstrated that (R)-albuterol binds to the beta2-adrenergic
+                 receptor with a high affinity, whereas (S)-albuterol binds with 100-fold less affinity than
+                 (R)-albuterol. Other evaluations have suggested that (R)-albuterol possesses the bronchodilatory,
+                 bronchoprotective, and ciliary-stimulatory properties of racemic albuterol, while (S)-albuterol
+                 does not beneficially to the therapeutic effects of the racemate and was originally assumed
+                 to be inert. Xopenex (levalbuterol HCl) Inhalation Solution is indicated for the treatment
+                 or prevention of bronchospasm in adults, adolescents, and children 6 years of age and older
+                 with reversible obstructive airway disease.",
+            "uri": [
+                "https://www.accessdata.fda.gov/drugsatfda_docs/label/2012/020837s036lbl.pdf |
+                    https://www.ncbi.nlm.nih.gov/pubmed/15293593 |
+                    https://www.ncbi.nlm.nih.gov/pubmed/10452786"
+            ]
+        },
+        "name": "Description"
+    },
+    {
+        "value": {
+            "highestPhase": "Approved"
+        },
+        "name": "Stitcher Highest Phase"
+    },
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile,t]
+  \frametitle{NCATS Inxight Drugs Stitcher Data for Albuterol: Targets and Conditions}
+  \framesubtitle{}
+  \tiny
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+    \vspace{-3\baselineskip}
+\begin{verbatim}
+{
+    "name": "Targets"
+    "value": {
+        "StitcherId": "17288.0",
+        "id": "CHEMBL210",
+        "label": "Beta-2 adrenergic receptor",
+        "type": "ChEMBL",
+        "pharmacology": "Agonist",
+        "potencyType": "Kd",
+        "potencyValue": "236.0",
+        "potencyDimensions": "nM",
+        "potencyUri": "https://www.ncbi.nlm.nih.gov/pubmed/8866170",
+        "uri": [
+            "https://www.accessdata.fda.gov/drugsatfda_docs/label/
+                2012/020837s036lbl.pdf"
+        ],
+        "condition_refs": null,
+        "conditions": []
+    },
+}
+\end{verbatim}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+    \vspace{-3\baselineskip}
+\begin{verbatim}
+{
+    "name": "Conditions"
+    "value": {
+        "StitcherId": "17648.0",
+        "label": "Asthma",
+        "uri": [
+            "https://www.ncbi.nlm.nih.gov/pubmed/15293593 ",
+            "http://adisinsight.springer.com/drugs/800005434"
+        ],
+        "highestPhase": "Approved",
+        "highestPhaseUri": "https://www.accessdata.fda.gov/
+            scripts/cder/ob/results_product.cfm?
+            Appl_Type=N&Appl_No=020837",
+        "modality": "Primary",
+        "productName": "XOPENEX",
+        "productFDAUse": "XOPENEX (levalbuterol HCl) Inhalation
+            Solution Concentrate is indicated for the treatment
+            or prevention of bronchospasm in adults, ...",
+        "productFDAUseUri": "https://www.accessdata.fda.gov/
+            drugsatfda_docs/label/2012/020837s036lbl.pdf",
+        "productDate": "9.2231998E11",
+        "isHighestPhaseApproved": "true",
+        "approvalSource": "RANCHO",
+        "target_refs": null,
+        "targets": []
+    },
+}
+\end{verbatim}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile,t]
+  \frametitle{NCATS Inxight Drugs FigShare Conditions for Albuterol}
+  \framesubtitle{}
+  \tiny
+\begin{verbatim}
+    "condition_id": 17648,
+    "name": "Asthma",
+    "condition_uri": "https://www.ncbi.nlm.nih.gov/pubmed/15293593 | ...",
+    "condition_comment": " ",
+    "product_name": "XOPENEX",
+    "product_date": 922320000000,
+    "condition_highest_phase": "Approved",
+    "highest_phase_uri": "https://www.accessdata.fda.gov/scripts/cder/ob/results_product.cfm?...",
+    "fda_use": "XOPENEX (levalbuterol HCl) Inhalation Solution Concentrate is indicated for the
+        treatment or prevention of bronchospasm in adults, adolescents, and children 6 years of
+        age and older with reversible obstructive airway disease.",
+    "offlabel_use": "Unknown",
+    "offlabel_use_uri": "Unknown",
+    "offlabel_use_comment": " ",
+    "clinical_trial": "NCT00667797",
+    "condition_treatment_modality": "Primary",
+    "condition_do_imprecise": false,
+    "condition_mesh_imprecise": false,
+    "mesh_id": "D001249",
+    "mesh_label": "Asthma",
+    "do_id": "2841",
+    "do_label": "asthma",
+    "is_fda_use": true,
+    "fda_use_uri": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2012/020837s036lbl.pdf",
+    "is_product_manual": false,
+    "highest_phase_discontinued": false,
+    "product_discontinued": false,
+    "is_product_date_unknown": false
+\end{verbatim}
+\end{frame}
+
+\begin{frame}
+  \frametitle{\href{https://platform-docs.opentargets.org/getting-started}{Open
+      Targets Platform} API and Example Use}
+  \framesubtitle{See
+    \href{https://github.com/ralatsdc/springbok-drug-resource-comparison}{springbok-drug-resource-comparison}
+    repository}
+  \begin{itemize}
+  \item[] \textbf{API}: \href{https://github.com/pachterlab/gget}{gget}
+    (repository actively developed), and Open Targets
+    \href{https://platform.opentargets.org/api}{API Description},
+    \href{https://platform-docs.opentargets.org/data-access/graphql-api}{GraphQL
+      API},
+    \href{https://api.platform.opentargets.org/api/v4/graphql/browser}{GraphQL
+      API playground}, and
+    \href{https://github.com/opentargets/platform-api}{repository}
+    (actively developed)
+  \item[] \textbf{Usage}: {\texttt gget\_cli.py $|$ open\_targets.py [-h]
+    [--gene-symbol GENE\_SYMBOL]}
+    \begin{itemize}
+    \item Find targets associated with a specific disease or phenotype
+    \item Find diseases and phenotypes associated with a specific
+      target
+    \item Explore evidence that supports a specific target-disease
+      association
+    \item Find tractability and safety information for a specific
+      target
+    \item Find clinical signs and symptoms for a specific disease
+    \item GWAS studies associated with a specified disease
+    \item Find approval status and withdrawn and black-box warning for
+      a specific drug
+    \item Credible sets from quantitative trait loci associated with
+      molecular traits containing a specified variant
+    \item Information about a specified study
+    \item Colocalisation metrics for overlapping credible sets from
+      GWAS studies
+    \end{itemize}
+  \item[] \textbf{Performance}: Got gget data for ADRB2 in 2 s, got Open
+    Targets data for ADRB2, and ALBUTEROL in less than 1 s
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,t]
+  \frametitle{Open Targets: Targets associated with a disease}
+  \framesubtitle{}
+  \tiny
+\begin{verbatim}
+"disease": {
+    "id": "MONDO_0004979",
+    "name": "asthma",
+    "associatedTargets": {
+        "count": 3039,
+        "rows": [
+            {
+                "target": {
+                    "id": "ENSG00000169252",
+                    "approvedSymbol": "ADRB2"
+                },
+                "score": 0.6148856746523589
+            },
+        ]
+    }
+}
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile,t]
+  \frametitle{Open Targets: Diseases associated with a target}
+  \framesubtitle{}
+  \tiny
+\begin{verbatim}
+"target": {
+    "id": "ENSG00000169252",
+    "approvedSymbol": "ADRB2",
+    "associatedDiseases": {
+        "count": 829,
+        "rows": [
+            {
+                "disease": {
+                    "id": "MONDO_0004979",
+                    "name": "asthma"
+                },
+                "datasourceScores": [
+                    {
+                        "id": "chembl",
+                        "score": 0.9988218092809733
+                    },
+                ]
+            },
+        ]
+    }
+}
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile,t]
+  \frametitle{Open Targets: Evidence for target-disease association}
+  \framesubtitle{}
+  \tiny
+\begin{verbatim}
+"disease": {
+    "id": "MONDO_0004979",
+    "name": "asthma",
+    "evidences": {
+        "count": 917,
+        "rows": [
+            {
+                "disease": {
+                    "id": "MONDO_0004979",
+                    "name": "asthma"
+                },
+                "diseaseFromSource": "bronchospasm",
+                "target": {
+                    "id": "ENSG00000169252",
+                    "approvedSymbol": "ADRB2"
+                },
+                "mutatedSamples": null,
+                "resourceScore": null,
+                "significantDriverMethods": null,
+                "cohortId": null,
+                "cohortShortName": null,
+                "cohortDescription": null
+            },
+        ]
+    }
+}
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile,t]
+  \frametitle{Open Targets: Tractability and safety information for a target}
+  \framesubtitle{}
+  \tiny
+  \begin{columns}[t]
+    \begin{column}{0.3\textwidth}
+\begin{verbatim}
+"target": {
+    "id": "ENSG00000169252",
+    "approvedSymbol": "ADRB2",
+    "tractability": [
+        {
+            "modality": "SM",
+            "label": "Approved Drug",
+            "value": true
+        },
+    ],
+\end{verbatim}
+    \end{column}
+    \begin{column}{0.7\textwidth}
+\begin{verbatim}
+    "safetyLiabilities": [
+        {
+            "event": "cardiac contractility",
+            "eventId": "GO_0045823",
+            "biosamples": [
+                {
+                    "cellFormat": null,
+                    "cellLabel": null,
+                    "tissueLabel": "cardiovascular system",
+                    "tissueId": "UBERON_0004535"
+                }
+            ],
+            "effects": [
+                {
+                    "dosing": "general",
+                    "direction": "Activation/Increase/Upregulation"
+                }
+            ],
+            "studies": null,
+            "datasource": "Urban et al. (2012)",
+            "literature": null
+        },
+    ]
+}
+\end{verbatim}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile,t]
+  \frametitle{Open Targets: Clinical signs and symptoms for a disease}
+  \framesubtitle{}
+  \tiny
+  \begin{columns}[t]
+    \begin{column}{0.4\textwidth}
+\begin{verbatim}
+"disease": {
+    "id": "MONDO_0004979",
+    "name": "asthma",
+    "phenotypes": {
+        "rows": [
+            {
+                "phenotypeHPO": {
+                    "id": "HP_0032933",
+                    "name": "Airway hyperresponsiveness",
+                    "description": "An increased sensitivity of
+                        the airways to an inhaled constrictor agonist,
+                        a steeper slope of the dose-response curve,
+                        and a greater maximal response to the agonist.",
+                    "namespace": null
+                },
+\end{verbatim}
+    \end{column}
+    \begin{column}{0.6\textwidth}
+\begin{verbatim}
+                "phenotypeEFO": null,
+                "evidence": [
+                    {
+                        "aspect": "P",
+                        "bioCuration": "HPO:probinson[2022-04-15]",
+                        "diseaseFromSourceId": "OMIM:600807",
+                        "diseaseFromSource": "Asthma, susceptibility to",
+                        "evidenceType": "TAS",
+                        "frequency": null,
+                        "frequencyHPO": null,
+                        "qualifierNot": false,
+                        "onset": [],
+                        "modifiers": [],
+                        "references": [
+                            "OMIM:600807"
+                        ],
+                        "sex": null,
+                        "resource": "HPO"
+                    }
+                ]
+            },
+        ]
+    }
+}
+\end{verbatim}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile,t]
+  \frametitle{Open Targets: GWAS studies associated with a disease}
+  \framesubtitle{diseaseId: MONDO\_0004979}
+  \tiny
+\begin{verbatim}
+"studies": {
+    "count": 175,
+    "rows": [
+        {
+            "id": "GCST90255360",
+            "projectId": "GCST",
+            "traitFromSource": "Asthma",
+            "publicationFirstAuthor": "Do AR",
+            "publicationDate": "2022-12-21",
+            "publicationJournal": "Sci Rep",
+            "nSamples": 6737,
+            "cohorts": [
+                "NR"
+            ],
+            "pubmedId": "36543808",
+            "ldPopulationStructure": [
+                {
+                    "ldPopulation": "eas",
+                    "relativeSampleSize": 1
+                }
+            ]
+        },
+    ]
+}
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile,t]
+  \frametitle{Open Targets: Approval status, and withdrawn and black-box warning for a drug}
+  \framesubtitle{}
+  \tiny
+\begin{verbatim}
+"drug": {
+    "name": "ALBUTEROL",
+    "id": "CHEMBL714",
+    "isApproved": true,
+    "hasBeenWithdrawn": false,
+    "blackBoxWarning": true,
+    "drugWarnings": [
+        {
+            "warningType": "Black Box Warning",
+            "description": null,
+            "toxicityClass": null,
+            "year": null,
+            "references": [
+                {
+                    "id": "8c278b6f-d32b-b750-e053-2995a90ad7e9",
+                    "source": "DailyMed",
+                    "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=8c278b6f-d32b-b750-e053-2995a90ad7e9"
+                },
+            ]
+        },
+    ]
+}
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile,t]
+  \frametitle{Open Targets: Credible sets from quantitative trait loci associated with molecular traits containing a variant}
+  \framesubtitle{}
+  \tiny
+  \begin{columns}[t]
+    \begin{column}{0.3\textwidth}
+\begin{verbatim}
+"variant": {
+    "id": "1_152312600_CACTG_C",
+    "qtlCredibleSets": {
+        "count": 1,
+        "rows": [
+            {
+                "studyLocusId":
+                    "4fea74b7dcc65149b658a71b5c5fa0f3",
+                "pValueMantissa": 3.322999954223633,
+                "pValueExponent": -7,
+                "beta": -0.839744,
+                "finemappingMethod": "SuSie",
+                "confidence":
+                    "SuSiE fine-mapped credible set
+                    with in-sample LD",
+                "variant": {
+                    "id": "1_152057072_G_A",
+                    "chromosome": "1"
+                },
+\end{verbatim}
+    \end{column}
+    \begin{column}{0.7\textwidth}
+\begin{verbatim}
+                "study": {
+                    "id": "gtex_exon_stomach_ensg00000143376_14_1_151693484_151693543",
+                    "studyType": "eqtl",
+                    "condition": "naive",
+                    "target": {
+                        "id": "ENSG00000143376",
+                        "approvedSymbol": "SNX27"
+                    },
+                    "biosample": {
+                        "biosampleId": "UBERON_0000945",
+                        "biosampleName": "stomach"
+                    }
+                },
+                "locus": {
+                    "rows": null
+                },
+                "locusSize": {
+                    "count": 2
+                }
+            }
+        ]
+    }
+}
+\end{verbatim}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile,t]
+  \frametitle{Open Targets: Information about a study}
+  \framesubtitle{}
+  \tiny
+\begin{verbatim}
+"studies": {
+    "count": 1,
+    "rows": [
+        {
+            "id": "gtex_exon_stomach_ensg00000143376_14_1_151693484_151693543",
+            "studyType": "eqtl",
+            "traitFromSource": "ENSG00000143376.14_1_151693484_151693543",
+            "projectId": "GTEx",
+            "diseases": [],
+            "publicationFirstAuthor": null,
+            "publicationDate": null,
+            "publicationJournal": null,
+            "pubmedId": "32913098",
+            "nSamples": 324,
+            "cohorts": null,
+            "ldPopulationStructure": null
+        }
+    ]
+}
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile,t]
+  \frametitle{Open Targets: Colocalisation metrics for overlapping credible sets}
+  \framesubtitle{studyLocusId: 4fea74b7dcc65149b658a71b5c5fa0f3}
+  \tiny
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+\begin{verbatim}
+"credibleSet": {
+    "colocalisation": {
+        "count": 18,
+        "rows": [
+            {
+                "otherStudyLocus": {
+                    "studyLocusId":
+                        "d3ef302b201c3fbc4fc972ebfe4fad0b",
+                    "study": {
+                        "id": "FINNGEN_R12_L12_FOODDERMAT",
+                        "projectId": "FINNGEN_R12",
+                        "traitFromSource":
+                            "Dermatitis due to ingested food",
+                        "publicationFirstAuthor": null
+                    },
+                    "variant": {
+                        "id": "1_152312600_CACTG_C",
+                        "chromosome": "1",
+                        "position": 152312600,
+                        "referenceAllele": "CACTG",
+                        "alternateAllele": "C"
+                    },
+                    "pValueMantissa": 2.427999973297119,
+                    "pValueExponent": -8
+                },
+\end{verbatim}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+\begin{verbatim}
+                "numberColocalisingVariants": 1,
+                "colocalisationMethod": "COLOC",
+                "h3": 0.005138319255541063,
+                "h4": 0.9944360622406548,
+                "clpp": null,
+                "betaRatioSignAverage": -1
+            },
+        ]
+    }
+}
+\end{verbatim}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile,t]
   \frametitle{Observations and Recommendations}
   \frametitle{}
   \framesubtitle{}
+  \tiny
 \end{frame}
 
 %% f
