@@ -42,7 +42,7 @@
 \title[]{Drug Resource Comparison}
 \subtitle[]{ChEMBL, NCATS Inxight Drugs, Open Targets}
 \author{Raymond LeClair}
-\date{Working Copy of May 13, 2025}
+\date{Working Copy of May 19, 2025}
 
 \begin{document}
 
@@ -73,18 +73,17 @@
   \begin{itemize}
   \item[] Purpose
     \begin{itemize}
-    \item Compare how comprehensive, authoritative, and organized
-      results from each resource appear
+    \item Compare how comprehensive, organized, and accessible results
+      from each resource appear
     \item Demonstrate use of drug resource APIs using Python
     \end{itemize}
-  \item[]
+    \vspace{0.5\baselineskip}
   \item[] Approach
     \begin{itemize}
     \item Follow gene target to approved drugs and disease indications
     \item Investigate gene target ADRB2, approved drug Albuterol, and
       disease Asthma
-    \item Focus on comparing indications, evidence, and resource
-      activity
+    \item Provide data samples for review, and comment by team members
     \end{itemize}
   \end{itemize}
 \end{frame}
@@ -103,7 +102,7 @@
         Biology Services}
     \item Twenty-four team members supporting four services
     \end{itemize}
-  \item[]
+    \vspace{0.5\baselineskip}
   \item[] \href{https://drugs.ncats.io/}{NCATS Inxight Drugs}
     \begin{itemize}
     \item ``A comprehensive portal for drug development information''
@@ -131,10 +130,7 @@
       Sanofi, Wellcome Sanger Institute
     \item Forty-seven team members supporting one service
     \end{itemize}
-  \item[]
-  \item[]
-  \item[]
-  \item[]
+    \vspace{4\baselineskip}
   \end{itemize}
 \end{frame}
 
@@ -151,7 +147,7 @@
     \item Since we search for drugs associated with these genes, the
       search does not find Albuterol
     \end{itemize}
-  \item[]
+    \vspace{0.5\baselineskip}
   \item[] And the EFO terms?
     \begin{itemize}
     \item The \href{https://www.ebi.ac.uk/efo/}{Experimental Factor
@@ -177,6 +173,7 @@
     \href{https://github.com/chembl/chembl_webresource_client}{repository}
     (not actively developed), and webresource client
     \href{http://beta.mybinder.org/v2/gh/chembl/chembl_webresource_client/master?filepath=demo_wrc.ipynb}{examples}
+    \vspace{0.5\baselineskip}
   \item[] \textbf{Usage}: {\texttt chembl.py [-h] [--gene-symbol GENE\_SYMBOL]
     [-f]}
     \begin{itemize}
@@ -185,6 +182,7 @@
     \item Get drugs and drug indications for all molecule ids
     \item Get SVG image for a drug
     \end{itemize}
+    \vspace{0.5\baselineskip}
   \item[] \textbf{Performance}: Got ChEMBL target data for ADRB2 in 383 s on
     the first request, and under 3 s on the second request, suggesting
     the responses are cached
@@ -430,6 +428,7 @@
   \item[] \textbf{API}: \href{https://drugs.ncats.io/api}{Inxight} (no repository
     located), and \href{https://github.com/ncats/stitcher}{Stitcher}
     (repository archived)
+    \vspace{0.5\baselineskip}
   \item[] \textbf{Usage}: {\texttt ncats.py [-h] [--compound-name COMPOUND\_NAME]
     [-f]}
     \begin{itemize}
@@ -438,6 +437,7 @@
     \item Read Figshare data for a compound unique ingredient identifier
     \item Decode Figshare conditions field
     \end{itemize}
+    \vspace{0.5\baselineskip}
   \item[] \textbf{Performance}: Got NCATS GSRS data for ALBUTEROL in 8 s, and
     Stitcher data for ALBUTEROL in 3 s, although performance varied
   \end{itemize}
@@ -916,7 +916,7 @@
 \end{verbatim}
     \end{column}
     \begin{column}{0.5\textwidth}
-    \vspace{-3\baselineskip}
+      \vspace{-3\baselineskip}
 \begin{verbatim}
 {
     "name": "Conditions"
@@ -992,7 +992,7 @@
   \framesubtitle{See
     \href{https://github.com/ralatsdc/springbok-drug-resource-comparison}{springbok-drug-resource-comparison}
     repository}
-  \begin{itemize}
+  \begin{itemize}\footnotesize
   \item[] \textbf{API}: \href{https://github.com/pachterlab/gget}{gget}
     (repository actively developed), and Open Targets
     \href{https://platform.opentargets.org/api}{API Description},
@@ -1002,9 +1002,10 @@
       API playground}, and
     \href{https://github.com/opentargets/platform-api}{repository}
     (actively developed)
+    \vspace{0.5\baselineskip}
   \item[] \textbf{Usage}: {\texttt gget\_cli.py $|$ open\_targets.py [-h]
     [--gene-symbol GENE\_SYMBOL]}
-    \begin{itemize}
+    \begin{itemize}\scriptsize
     \item Find targets associated with a specific disease or phenotype
     \item Find diseases and phenotypes associated with a specific
       target
@@ -1014,14 +1015,14 @@
       target
     \item Find clinical signs and symptoms for a specific disease
     \item GWAS studies associated with a specified disease
-    \item Find approval status and withdrawn and black-box warning for
-      a specific drug
+    \item Find indications for a specific drug
     \item Credible sets from quantitative trait loci associated with
       molecular traits containing a specified variant
     \item Information about a specified study
     \item Colocalisation metrics for overlapping credible sets from
       GWAS studies
     \end{itemize}
+    \vspace{0.5\baselineskip}
   \item[] \textbf{Performance}: Got gget data for ADRB2 in 2 s, got Open
     Targets data for ADRB2, and ALBUTEROL in less than 1 s
   \end{itemize}
@@ -1175,6 +1176,7 @@
     "id": "MONDO_0004979",
     "name": "asthma",
     "phenotypes": {
+        "count": 5,
         "rows": [
             {
                 "phenotypeHPO": {
@@ -1252,34 +1254,101 @@
 \end{frame}
 
 \begin{frame}[fragile,t]
-  \frametitle{Open Targets: Approval status, and withdrawn and black-box warning for a drug}
+  \frametitle{Open Targets: Indications for a drug}
   \framesubtitle{}
   \tiny
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+      \vspace{-2\baselineskip}
 \begin{verbatim}
 "drug": {
     "name": "ALBUTEROL",
     "id": "CHEMBL714",
     "isApproved": true,
-    "hasBeenWithdrawn": false,
-    "blackBoxWarning": true,
-    "drugWarnings": [
-        {
-            "warningType": "Black Box Warning",
-            "description": null,
-            "toxicityClass": null,
-            "year": null,
-            "references": [
-                {
-                    "id": "8c278b6f-d32b-b750-e053-2995a90ad7e9",
-                    "source": "DailyMed",
-                    "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=8c278b6f-d32b-b750-e053-2995a90ad7e9"
-                },
-            ]
-        },
-    ]
+    "indications": {
+        "count": 35,
+        "rows": [
+            {
+                "maxPhaseForIndication": 4,
+                "references": [
+                    {
+                        "source": "DailyMed",
+                        "ids": [
+                            "29d24a6d-f9c1-4300-97c7-fec26bdbc22b"
+                        ]
+                    }
+                ],
+                "disease": {
+                    "id": "MONDO_0004979",
+                    "name": "asthma",
+\end{verbatim}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \vspace{-2\baselineskip}
+\begin{verbatim}
+                    "dbXRefs": [
+                        "ICD9:493.81",
+                        "UMLS:C0004096",
+                        "DOID:2841",
+                        "ICD9:493.9",
+                        "ICD9:493",
+                        "NCIT:C28397",
+                        "icd11.foundation:1656445230",
+                        "MESH:D001249",
+                        "SCTID:31387002",
+                        "HP:0002099",
+                        "ICD10CM:J45",
+                        "MEDGEN:2109"
+                    ],
+                    "literatureOcurrences": {
+                        "count": 32368,
+                        "rows": [
+                            {
+                                "pmid": "25671117",
+                                "pmcid": "PMC4323120",
+                                "publicationDate": "2015-01-01"
+                            },
+                        ]
+                    }
+                }
+            },
+        ]
+    }
 }
 \end{verbatim}
+    \end{column}
+  \end{columns}
 \end{frame}
+
+%% \begin{frame}[fragile,t]
+%%   \frametitle{Open Targets: Approval status, and withdrawn and black-box warning for a drug}
+%%   \framesubtitle{}
+%%   \tiny
+%% \begin{verbatim}
+%% "drug": {
+%%     "name": "ALBUTEROL",
+%%     "id": "CHEMBL714",
+%%     "isApproved": true,
+%%     "hasBeenWithdrawn": false,
+%%     "blackBoxWarning": true,
+%%     "drugWarnings": [
+%%         {
+%%             "warningType": "Black Box Warning",
+%%             "description": null,
+%%             "toxicityClass": null,
+%%             "year": null,
+%%             "references": [
+%%                 {
+%%                     "id": "8c278b6f-d32b-b750-e053-2995a90ad7e9",
+%%                     "source": "DailyMed",
+%%                     "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=8c278b6f-d32b-b750-e053-2995a90ad7e9"
+%%                 },
+%%             ]
+%%         },
+%%     ]
+%% }
+%% \end{verbatim}
+%% \end{frame}
 
 \begin{frame}[fragile,t]
   \frametitle{Open Targets: Credible sets from quantitative trait loci associated with molecular traits containing a variant}
@@ -1325,6 +1394,7 @@
                     }
                 },
                 "locus": {
+                    "count": 0,
                     "rows": null
                 },
                 "locusSize": {
@@ -1418,10 +1488,29 @@
 \end{frame}
 
 \begin{frame}[fragile,t]
-  \frametitle{Observations and Recommendations}
+  \frametitle{Observations and Next Step}
   \frametitle{}
   \framesubtitle{}
-  \tiny
+  \begin{itemize}
+  \item[] Open Targets appears to offer the most comprehensive
+    resource
+    \begin{itemize}
+    \item Includes ChEMBL indications data
+    \item Like NCATS Inxight Drugs, includes PubMed and PubMed Central
+      data
+    \item Includes GWAS data
+    \end{itemize}
+    \vspace{0.5\baselineskip}
+  \item[] Open Targets data appears well organized, and easily
+    accessible using GraphQL
+    \vspace{0.5\baselineskip}
+  \item[] Open Targets is supported by the largest team, and appears
+    to be actively developed
+    \vspace{0.5\baselineskip}
+  \item[] Next step for team: review and select data elements from
+    each resource
+    \href{https://drive.google.com/drive/u/0/folders/1oWTGj9LLKeqklSrDB97kliZlKHrgdBKo}{here}
+  \end{itemize}
 \end{frame}
 
 %% f
