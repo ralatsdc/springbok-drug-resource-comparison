@@ -144,6 +144,7 @@ query diseaseAnnotation($efoId: String!) {
     id
     name
     phenotypes {
+      count
       rows {
         phenotypeHPO {
           id
@@ -241,6 +242,44 @@ query drugApprovalWithdrawnWarningData($chemblId: String!) {
 }
 """,
     },
+    "drugIndications": {
+        "purpose": "Find indications for a specific drug",
+        "variables": {
+            "chemblId": "CHEMBL714",
+        },
+        "query_string": """
+query drugIndications($chemblId: String!) {
+  drug(chemblId: $chemblId) {
+    name
+    id
+    isApproved
+    indications {
+      count
+      rows {
+        maxPhaseForIndication
+        references {
+          source
+          ids
+        }
+        disease {
+          id
+          name
+          dbXRefs
+          literatureOcurrences {
+            count
+            rows {
+              pmid
+              pmcid
+              publicationDate
+            }
+          }
+        }
+      }
+    }
+  }
+}
+""",
+    },
     "QTLCredibleSetsQuery": {
         "purpose": "Credible sets from quantitative trait loci associated with molecular traits containing a specified variant",
         "variables": {
@@ -279,6 +318,7 @@ query QTLCredibleSetsQuery($variantId: String!) {
           }
         }
         locus(variantIds: ["19_44908822_C_T"]) {
+          count
           rows {
             posteriorProbability
           }
