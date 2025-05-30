@@ -8,7 +8,8 @@ import time
 import requests
 
 from LoaderUtilities import get_gene_name_to_ids_map, map_gene_name_to_ids
-from open_targets_samples import queries
+from open_targets_examples import example_queries
+from open_targets_gget import gget_queries
 
 BASE_URL = "https://api.platform.opentargets.org/api/v4/graphql"
 
@@ -438,15 +439,15 @@ def main():
             f"Got Open Targets drug data for {drug_name} in {stop_time - start_time} seconds"
         )
 
-    # == sample queries
+    # == example queries
 
-    for name, query in queries.items():
+    for name, query in example_queries.items():
 
-        results_path = Path(f"../results/open-targets-{name}.json")
+        results_path = Path(f"../results/open-targets-example-{name}.json")
         if not results_path.exists() or args.force:
 
             start_time = time.time()
-            print(f"Running Open Targets sample query {name}")
+            print(f"Running Open Targets example query {name}")
 
             response = requests.post(
                 BASE_URL,
@@ -461,7 +462,33 @@ def main():
 
             stop_time = time.time()
             print(
-                f"Ran Open Targets sample query {name} in {stop_time - start_time} seconds"
+                f"Ran Open Targets example query {name} in {stop_time - start_time} seconds"
+            )
+
+    # == gget queries
+
+    for name, query in example_queries.items():
+
+        results_path = Path(f"../results/open-targets-gget-{name}.json")
+        if not results_path.exists() or args.force:
+
+            start_time = time.time()
+            print(f"Running Open Targets gget query {name}")
+
+            response = requests.post(
+                BASE_URL,
+                json={"query": query["query_string"], "variables": query["variables"]},
+            )
+            results = {}
+            results["purpose"] = query["purpose"]
+            results["variables"] = query["variables"]
+            results["data"] = json.loads(response.text)["data"]
+            with open(results_path, "w") as fp:
+                json.dump(results, fp, indent=4)
+
+            stop_time = time.time()
+            print(
+                f"Ran Open Targets gget query {name} in {stop_time - start_time} seconds"
             )
 
 

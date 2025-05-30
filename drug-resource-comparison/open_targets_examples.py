@@ -1,4 +1,4 @@
-queries = {
+example_queries = {
     "associatedTargets": {
         "purpose": "Find targets associated with a specific disease or phenotype",
         "variables": {
@@ -22,7 +22,7 @@ query associatedTargets($efoId: String!) {
   }
 }
 """,
-    },
+},
     "associatedDiseases": {
         "purpose": "Find diseases and phenotypes associated with a specific target",
         "variables": {
