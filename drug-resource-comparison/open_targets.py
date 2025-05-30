@@ -467,9 +467,9 @@ def main():
 
     # == gget queries
 
-    for name, query in example_queries.items():
+    for name, query in gget_queries.items():
 
-        results_path = Path(f"../results/open-targets-gget-{name}.json")
+        results_path = Path(f"../results/open-targets-ggetx-{name}.json")
         if not results_path.exists() or args.force:
 
             start_time = time.time()

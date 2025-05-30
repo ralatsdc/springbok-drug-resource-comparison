@@ -8,7 +8,10 @@ gget_queries = {
 query target($ensemblId: String!) {
   target(ensemblId: $ensemblId) {
     id
-    dbXRefs
+    dbXrefs {
+        id
+        source
+    }
     proteinIds {
       id
       source
@@ -62,11 +65,11 @@ query target($ensemblId: String!) {
       }
     }
     interactions {
-      score
       count
-      sourceDatabase
       rows {
         count
+        score
+        sourceDatabase
         targetA {
           proteinIds {
             id
@@ -105,8 +108,11 @@ query target($ensemblId: String!) {
         label
       }
       drugs {
-        id
-        name
+        drugId
+        drugFromSource
+        drug {
+          name
+        }
       }
       phenotypeText
       genotypeAnnotationText
@@ -240,11 +246,11 @@ query interactions($ensemblId: String!) {
   target(ensemblId: $ensemblId) {
     id
     interactions {
-      score
       count
-      sourceDatabase
       rows {
         count
+        score
+        sourceDatabase
         targetA {
           proteinIds {
             id
@@ -296,8 +302,11 @@ query pharmacogenetics($ensemblId: String!) {
         label
       }
       drugs {
-        id
-        name
+        drugId
+        drugFromSource
+        drug {
+          name
+        }
       }
       phenotypeText
       genotypeAnnotationText
